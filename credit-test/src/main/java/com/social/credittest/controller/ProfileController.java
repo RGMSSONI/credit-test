@@ -102,7 +102,7 @@ public class ProfileController {
 	@RequestMapping(value="{userId}/follow", method=RequestMethod.POST)
     public ResponseEntity<Object> follow(@PathVariable String userId,@RequestParam(required=true) String id ) {	
 		if(postService.checkUser(userId)){
-			if(postService.checkUser(userId)) {
+			if(postService.checkUser(id)) {
 				profileRepo.addFollower(userId, id);
 				return new ResponseEntity<Object>( HttpStatus.OK);	
 			}
@@ -116,7 +116,7 @@ public class ProfileController {
 	@RequestMapping(value="{userId}/unfollow", method=RequestMethod.POST)
     public ResponseEntity<Object> unfollow(@PathVariable String userId,@RequestParam(required=true) String id) {	
 		if(postService.checkUser(userId)){
-			if(postService.checkUser(userId)) {
+			if(postService.checkUser(id)) {
 				profileRepo.removeFollower(userId, id);
 				return new ResponseEntity<Object>( HttpStatus.OK);	
 			}
