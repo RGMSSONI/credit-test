@@ -37,15 +37,23 @@ public class ProfileController {
 		List<Post> outputPost = new ArrayList<>();
 		if(postService.checkUser(userId)){
 			List<Post> post = postService.getPost(userId);
-			outputPost.addAll(post);
+			if(post!=null) {
+				outputPost.addAll(post);
+			}	
 			Profile profile = profileRepo.getProfile(userId);
 			Set<String> profileSet = profile.getFollowing();
 			for(String id : profileSet){
 				List<Post> followiypost = postService.getPost(id);
-				outputPost.addAll(followiypost);
+				if(followiypost!=null) {
+					outputPost.addAll(followiypost);
+				}				
 			}
 			Collections.sort(outputPost);
-			return new ResponseEntity<Object>(outputPost.subList(0, NEWS_FEED_LIMIT), HttpStatus.OK);
+			if(outputPost.size()<NEWS_FEED_LIMIT) {
+				return new ResponseEntity<Object>(outputPost, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Object>(outputPost.subList(0, NEWS_FEED_LIMIT), HttpStatus.OK);
+			}	
 		}
 		return new ResponseEntity<Object>("user not found", HttpStatus.NOT_FOUND);
     }
@@ -92,14 +100,29 @@ public class ProfileController {
 
 	
 	@RequestMapping(value="{userId}/follow", method=RequestMethod.POST)
-    public ResponseEntity<Object> follow(@PathVariable String userId,@RequestParam(required=true) String id ) {
-			profileRepo.addFollower(userId, id);
-			return new ResponseEntity<Object>( HttpStatus.OK);	
+    public ResponseEntity<Object> follow(@PathVariable String userId,@RequestParam(required=true) String id ) {	
+		if(postService.checkUser(userId)){
+			if(postService.checkUser(userId)) {
+				profileRepo.addFollower(userId, id);
+				return new ResponseEntity<Object>( HttpStatus.OK);	
+			}
+			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NO_CONTENT);	
+		}else {
+			return new ResponseEntity<Object>("user id not exist", HttpStatus.NO_CONTENT);	
+		}		
+		
     }
 	
 	@RequestMapping(value="{userId}/unfollow", method=RequestMethod.POST)
-    public ResponseEntity<Object> unfollow(@PathVariable String userId,@RequestParam(required=true) String id) {
-			profileRepo.removeFollower(userId, id);
-		return new ResponseEntity<Object>( HttpStatus.OK);	
+    public ResponseEntity<Object> unfollow(@PathVariable String userId,@RequestParam(required=true) String id) {	
+		if(postService.checkUser(userId)){
+			if(postService.checkUser(userId)) {
+				profileRepo.removeFollower(userId, id);
+				return new ResponseEntity<Object>( HttpStatus.OK);	
+			}
+			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NO_CONTENT);	
+		}else {
+			return new ResponseEntity<Object>("user id not exist", HttpStatus.NO_CONTENT);	
+		}		
     }
 }
