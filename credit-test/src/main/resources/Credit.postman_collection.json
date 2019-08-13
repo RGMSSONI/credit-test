@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "fb4011b9-72de-4540-8424-f67e19c93bcb",
+		"name": "Credit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createProfile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"userId\":\"3\",\n\"followers\":[],\n\"following\":[]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/createProfile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProfile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/getProfile/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"getProfile",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPost",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"postId\":\"1\",\n\t\"content\":\"hello there\",\n\t\"date\":\"12-12-2019\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/1/createPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"1",
+						"createPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getNewsFeed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/1/getNewsFeed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"1",
+						"getNewsFeed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "follows",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/1/follow?id=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"1",
+						"follow"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unfollow",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/1/unfollow?id=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"1",
+						"unfollow"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
