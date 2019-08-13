@@ -106,9 +106,9 @@ public class ProfileController {
 				profileRepo.addFollower(userId, id);
 				return new ResponseEntity<Object>( HttpStatus.OK);	
 			}
-			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NO_CONTENT);	
+			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NOT_FOUND);	
 		}else {
-			return new ResponseEntity<Object>("user id not exist", HttpStatus.NO_CONTENT);	
+			return new ResponseEntity<Object>("user id not exist", HttpStatus.NOT_FOUND);	
 		}		
 		
     }
@@ -120,9 +120,9 @@ public class ProfileController {
 				profileRepo.removeFollower(userId, id);
 				return new ResponseEntity<Object>( HttpStatus.OK);	
 			}
-			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NO_CONTENT);	
+			return new ResponseEntity<Object>("Follow person does it not exist",HttpStatus.NOT_FOUND);	
 		}else {
-			return new ResponseEntity<Object>("user id not exist", HttpStatus.NO_CONTENT);	
+			return new ResponseEntity<Object>("user id not exist", HttpStatus.NOT_FOUND);	
 		}		
     }
 }
