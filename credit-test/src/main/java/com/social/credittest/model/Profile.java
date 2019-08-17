@@ -5,22 +5,16 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/*import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-@Getter @Setter @NoArgsConstructor*/
 public class Profile {
     
 	@JsonProperty("userId")
    private String userId;
     
 	@JsonProperty("followers")
-   private Set<String> followers = new HashSet<String>();
+   private Set<String> followers = new HashSet<>();
   
 	@JsonProperty("following")
-   private Set<String> following = new HashSet<String>();
+   private Set<String> following = new HashSet<>();
 
 public String getUserId() {
 	return userId;

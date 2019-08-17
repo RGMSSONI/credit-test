@@ -16,11 +16,11 @@ import static org.mockito.BDDMockito.given;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.social.credittest.controller.ProfileController;
+import com.social.credittest.controller.SocialMediaController;
 import com.social.credittest.model.Post;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ProfileController.class)
+@WebMvcTest(SocialMediaController.class)
 @ContextConfiguration(classes=CreditTestApplication.class)
 public class CreditTestApplicationTests {
 
@@ -28,7 +28,7 @@ public class CreditTestApplicationTests {
 	private MockMvc mvc;*/
 	
 	@MockBean
-	private ProfileController profileController;
+	private SocialMediaController socialMediaController;
 	
 	@Test
 	public void createPostMock() throws Exception {
@@ -37,7 +37,7 @@ public class CreditTestApplicationTests {
 		post.setPostId("1");
 		post.setContent("Hello There!");
 		
-		given(profileController.createPost(userId, post)).willReturn(new ResponseEntity<>(HttpStatus.CREATED));
+		given(socialMediaController.createPost(userId, post)).willReturn(new ResponseEntity<>(HttpStatus.CREATED));
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class CreditTestApplicationTests {
 		String userId= "1";
 		String id ="2";
 		
-		given(profileController.follow(userId, id)).willReturn(new ResponseEntity<>(HttpStatus.OK));
+		given(socialMediaController.follow(userId, id)).willReturn(new ResponseEntity<>(HttpStatus.OK));
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class CreditTestApplicationTests {
 		String userId= "1";
 		String id ="2";
 		
-		given(profileController.unfollow(userId, id)).willReturn(new ResponseEntity<>(HttpStatus.OK));
+		given(socialMediaController.unfollow(userId, id)).willReturn(new ResponseEntity<>(HttpStatus.OK));
 	}
 	
 	@Test
@@ -66,7 +66,7 @@ public class CreditTestApplicationTests {
 		post.setContent("Hello There!");
 		
 		outputPost.add(post);
-		given(profileController.getNewsFeed(userId)).willReturn(new ResponseEntity<>(outputPost,HttpStatus.OK));
+		given(socialMediaController.getNewsFeed(userId)).willReturn(new ResponseEntity<>(outputPost,HttpStatus.OK));
 	}
 	
 }

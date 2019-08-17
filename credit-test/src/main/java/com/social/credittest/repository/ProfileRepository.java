@@ -13,8 +13,8 @@ public class ProfileRepository {
 	
 	private Map<String, Profile> profileByIdMap = new ConcurrentHashMap<>();
 	
-	public void createProfile(String userId,Profile profile){
-		profileByIdMap.put(userId, profile);	
+	public Profile createProfile(String userId,Profile profile){
+		return profileByIdMap.put(userId, profile);		
     }
 	
 	public Profile getProfile(String userId){
@@ -23,37 +23,5 @@ public class ProfileRepository {
 	
 	public boolean checkUser(String userId){
         return profileByIdMap.containsKey(userId);
-    }
-	
-	
-	public void addFollower(String userId, String id){
-		Profile profile = profileByIdMap.get(userId);	
-		Set<String> following = profile.getFollowing();
-		
-		if(profileByIdMap.containsKey(id)){
-			following.add(id);
-			profile.setFollowing(following);
-			
-			Profile follwiyProfile = profileByIdMap.get(id);	
-			Set<String> followers = follwiyProfile.getFollowers();
-			followers.add(userId);
-			follwiyProfile.setFollowers(followers);			
-		}
-	}
-	
-	public void removeFollower(String userId, String id){
-		Profile profile = profileByIdMap.get(userId);	
-		Set<String> following = profile.getFollowing();
-		
-		if(profileByIdMap.containsKey(id)){	
-			following.remove(id);
-			profile.setFollowing(following);
-			
-			Profile followProfile = profileByIdMap.get(id);
-			Set<String> followers = followProfile.getFollowers();
-			followers.remove(userId);
-			followProfile.setFollowers(followers);
-			
-		}
-	}
+    }	
 }
