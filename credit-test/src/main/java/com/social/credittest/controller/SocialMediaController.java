@@ -1,10 +1,6 @@
 package com.social.credittest.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.social.credittest.model.Post;
 import com.social.credittest.model.Profile;
-import com.social.credittest.repository.ProfileRepository;
 import com.social.credittest.service.PostService;
 import com.social.credittest.service.ProfileService;
 

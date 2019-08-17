@@ -67,6 +67,5 @@ public class CreditTestApplicationTests {
 		
 		outputPost.add(post);
 		given(socialMediaController.getNewsFeed(userId)).willReturn(new ResponseEntity<>(outputPost,HttpStatus.OK));
-	}
-	
+	}	
 }
