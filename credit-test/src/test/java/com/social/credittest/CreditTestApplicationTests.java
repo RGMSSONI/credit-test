@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.constraints.AssertTrue;
 
 import com.social.credittest.controller.SocialMediaController;
 import com.social.credittest.model.GenericResponse;
@@ -49,9 +51,9 @@ public class CreditTestApplicationTests {
 	}
 
 	@Test
-	public void createPostUserNull() {
+	public  void createPostUserNull() {
 		when(postService.createPost(anyString(), any(Post.class))).thenReturn(any(Post.class));	
-		verify(postService).createPost(anyString(), any());
+		assertEquals(postService.createPost(anyString(),any(Post.class)),any(Post.class));
 	}
 	
 	@Test
@@ -78,13 +80,13 @@ public class CreditTestApplicationTests {
 	@Test
 	public void getNewsFeedUserNull(){
 		when(postService.newsFeed(anyString())).thenReturn(null);
-		verify(postService).newsFeed(anyString());
+		assertEquals(postService.newsFeed(anyString()),null);
 	}
 	
 	@Test
 	public void getNewsFeedUserNot(){	
 		when(postService.newsFeed(anyString())).thenReturn(anyList());	
-		verify(postService).newsFeed(anyString());
+		assertEquals(postService.newsFeed(anyString()),anyList());
 	}
 	
 	@Test
@@ -98,8 +100,7 @@ public class CreditTestApplicationTests {
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
 		when(profileService.addFollower(anyString(), anyString())).thenReturn(response);
-		
-		verify(profileService).addFollower(anyString(), anyString());
+		assertEquals(profileService.addFollower(anyString(),anyString()),response);
 	}
 	
 	@Test
@@ -113,7 +114,7 @@ public class CreditTestApplicationTests {
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
 		when(profileService.addFollower(anyString(), anyString())).thenReturn(response);
-		verify(profileService).addFollower(anyString(), anyString());
+		assertEquals(profileService.addFollower(anyString(),anyString()),response);
 	}
 	
 	@Test
@@ -127,7 +128,7 @@ public class CreditTestApplicationTests {
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
 		when(profileService.removeFollower(anyString(), anyString())).thenReturn(response);
-		verify(profileService).removeFollower(anyString(), anyString());
+		assertEquals(profileService.removeFollower(anyString(),anyString()),response);		
 	}
 	
 	@Test
@@ -141,7 +142,7 @@ public class CreditTestApplicationTests {
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
 		when(profileService.addFollower(anyString(), anyString())).thenReturn(response);
-		verify(profileService).addFollower(anyString(), anyString());
+		assertEquals(profileService.addFollower(anyString(),anyString()),response);
 	}
 	
 	@Test
@@ -149,7 +150,7 @@ public class CreditTestApplicationTests {
 		Profile profile = new Profile();
 		profile.setUserId("1");
 		when(profileService.createProfile(profile)).thenReturn(profile);
-		verify(profileService).createProfile(profile);
+		assertEquals(profileService.createProfile(profile),profile);
 	}
 	
 	@Test
@@ -157,28 +158,28 @@ public class CreditTestApplicationTests {
 		Profile profile = new Profile();
 		profile=null;
 		when(profileService.createProfile(profile)).thenReturn(null);
-		verify(profileService).createProfile(profile);
+		assertEquals(profileService.createProfile(profile),null);
 	}
 	
 	@Test
 	public void createProfileTestObjectEmpty(){
 		Profile profile = new Profile();
 		when(profileService.createProfile(profile)).thenReturn(null);
-		verify(profileService).createProfile(profile);
+		assertEquals(profileService.createProfile(profile),null);
 	}
 	
 	@Test
 	public void getProfile(){
 		Profile profile = mock(Profile.class);
 		when(profileService.fetchProfile(anyString())).thenReturn(profile);
-		verify(profileService).fetchProfile(anyString());
+		assertEquals(profileService.fetchProfile(anyString()),profile);
 	}
 	
 	
 	@Test
 	public void getProfileEmpty(){
 		when(profileService.fetchProfile(anyString())).thenReturn(null);
-		verify(profileService.fetchProfile(anyString()));
+		assertEquals(profileService.fetchProfile(anyString()),null);
 	}
 
 }
