@@ -1,4 +1,9 @@
 package com.social.credittest.service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +13,6 @@ import com.social.credittest.model.Post;
 import com.social.credittest.model.Profile;
 import com.social.credittest.repository.PostRepository;
 import com.social.credittest.repository.ProfileRepository;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class PostService {

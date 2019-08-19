@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.social.credittest.model.GenericResponse;
 import com.social.credittest.model.Post;
 import com.social.credittest.model.Profile;
 import com.social.credittest.service.PostService;
@@ -64,14 +65,14 @@ public class SocialMediaController {
     }
 
 	@RequestMapping(value="{userId}/follow", method=RequestMethod.POST)
-    public ResponseEntity<String> follow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id ) {	
-		profileService.addFollower(userId, id);
-		return new ResponseEntity<String>(HttpStatus.OK);
+    public ResponseEntity<GenericResponse> follow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id ) {	
+		GenericResponse response = profileService.addFollower(userId, id);
+		return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="{userId}/unfollow", method=RequestMethod.POST)
-    public ResponseEntity<String> unfollow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id) {	
-		profileService.removeFollower(userId, id);
-		return new ResponseEntity<String>(HttpStatus.OK);
+    public ResponseEntity<GenericResponse> unfollow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id) {	
+		GenericResponse response = profileService.removeFollower(userId, id);
+		return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
 	}
 }

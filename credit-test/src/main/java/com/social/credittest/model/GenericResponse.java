@@ -1,8 +1,11 @@
 package com.social.credittest.model;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GenericResponse<T> {
+@Component
+public class GenericResponse {
 	
 	@JsonProperty("code")
 	private int code;
@@ -10,15 +13,6 @@ public class GenericResponse<T> {
 	@JsonProperty("status")
 	private String status;
 	
-	@JsonProperty("data")
-	private T data;
-	
-	public T getData() {
-		return data;
-	}
-	public void setData(T data) {
-		this.data = data;
-	}
 	public int getErrorCode() {
 		return code;
 	}
