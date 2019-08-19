@@ -13,10 +13,10 @@ public class GenericResponse {
 	@JsonProperty("status")
 	private String status;
 	
-	public int getErrorCode() {
+	public int getCode() {
 		return code;
 	}
-	public void setErrorCode(int code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 	public String getStatus() {

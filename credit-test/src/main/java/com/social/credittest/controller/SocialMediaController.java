@@ -67,12 +67,22 @@ public class SocialMediaController {
 	@RequestMapping(value="{userId}/follow", method=RequestMethod.POST)
     public ResponseEntity<GenericResponse> follow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id ) {	
 		GenericResponse response = profileService.addFollower(userId, id);
-		return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
+		if(response.getCode()==404){
+			return new ResponseEntity<GenericResponse>(response,HttpStatus.NOT_FOUND);
+		}else if(response.getCode()==200){
+			return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
+		}
+		return new ResponseEntity<GenericResponse>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@RequestMapping(value="{userId}/unfollow", method=RequestMethod.POST)
     public ResponseEntity<GenericResponse> unfollow(@PathVariable(required=true) String userId,@RequestParam(required=true) String id) {	
 		GenericResponse response = profileService.removeFollower(userId, id);
-		return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
+		if(response.getCode()==404){
+			return new ResponseEntity<GenericResponse>(response,HttpStatus.NOT_FOUND);
+		}else if(response.getCode()==200){
+			return new ResponseEntity<GenericResponse>(response,HttpStatus.OK);
+		}
+		return new ResponseEntity<GenericResponse>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

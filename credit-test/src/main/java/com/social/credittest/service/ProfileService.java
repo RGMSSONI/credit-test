@@ -43,16 +43,16 @@ public class ProfileService {
 				Set<String> followers = follwiyProfile.getFollowers();
 				followers.add(userId);
 				follwiyProfile.setFollowers(followers);
-				response.setErrorCode(200);
+				response.setCode(200);
 				response.setStatus("Success");
 				return response;
 			}else{
-				response.setErrorCode(404);
+				response.setCode(404);
 				response.setStatus("Follow Person not found");
 				return response;
 			}
 		}else{
-			response.setErrorCode(404);
+			response.setCode(404);
 			response.setStatus("User does not found");
 			return response;
 		}
@@ -71,16 +71,16 @@ public class ProfileService {
 				Set<String> followers = followProfile.getFollowers();
 				followers.remove(userId);
 				followProfile.setFollowers(followers);
-				response.setErrorCode(200);
+				response.setCode(200);
 				response.setStatus("Success");
 				return response;
 			}else{
-				response.setErrorCode(404);
+				response.setCode(404);
 				response.setStatus("unFollow Person not found");
 				return response;
 			}
 		}else{
-			response.setErrorCode(404);
+			response.setCode(404);
 			response.setStatus("User does not found");
 			return response;
 		}
