@@ -3,6 +3,8 @@ package com.social.credittest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.stubbing.Answer;
+import org.mockito.stubbing.OngoingStubbing;
 
 import static org.mockito.Mockito.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,12 +20,11 @@ import static org.mockito.BDDMockito.given;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.AssertTrue;
-
 import com.social.credittest.controller.SocialMediaController;
 import com.social.credittest.model.GenericResponse;
 import com.social.credittest.model.Post;
 import com.social.credittest.model.Profile;
+import com.social.credittest.repository.ProfileRepository;
 import com.social.credittest.service.PostService;
 import com.social.credittest.service.ProfileService;
 
@@ -33,13 +34,16 @@ import com.social.credittest.service.ProfileService;
 public class CreditTestApplicationTests {
 	
 	@MockBean
-	private SocialMediaController socialMediaController;
+	SocialMediaController socialMediaController;
 	
 	@Mock
-	private ProfileService profileService;
+	ProfileService profileService;
 	
 	@Mock
-	private PostService postService;
+	ProfileRepository profileRepo;
+	
+	@Mock
+	PostService postService;
 		
 	@Test
 	public void createPostMock() {
@@ -51,20 +55,38 @@ public class CreditTestApplicationTests {
 	}
 
 	@Test
-	public  void createPostUserNull() {
-		when(postService.createPost(anyString(), any(Post.class))).thenReturn(any(Post.class));	
-		assertEquals(postService.createPost(anyString(),any(Post.class)),any(Post.class));
+	public void createPostMockUserNull() {
+		Post post = new Post();
+		post.setPostId("1");
+		post.setContent("Hello There!");
+		
+		when(profileRepo.checkUser(anyString())).thenReturn(false);
+		given(socialMediaController.createPost(anyString(), any(Post.class))).willReturn(new ResponseEntity<Post>(post,HttpStatus.NOT_FOUND));
+	}
+	
+	/*@Test
+	public void followMock() {
+		when(socialMediaController.follow(anyString(), anyString())).thenReturn(new ResponseEntity<GenericResponse>(any(GenericResponse.class),HttpStatus.OK));
+		//given(socialMediaController.follow(anyString(), anyString())).willReturn(new ResponseEntity<GenericResponse>(any(GenericResponse.class),HttpStatus.OK));
+		assertEquals(socialMediaController.follow(anyString(), anyString()).getStatusCodeValue(),eq(HttpStatus.OK.value()));
 	}
 	
 	@Test
-	public void followMock() {
-		given(socialMediaController.follow(anyString(), anyString())).willReturn(new ResponseEntity<>(HttpStatus.OK));
+	public void followMockUserOrFollowNull() {
+		when(profileRepo.checkUser(anyString())).thenReturn(false);
+		given(socialMediaController.follow(anyString(), anyString())).willReturn(new ResponseEntity<GenericResponse>(any(GenericResponse.class),HttpStatus.NOT_FOUND));
 	}
 	
 	@Test
 	public void unFollowMock() {		
-		given(socialMediaController.unfollow(anyString(), anyString())).willReturn(new ResponseEntity<>(HttpStatus.OK));
+		given(socialMediaController.unfollow(anyString(), anyString())).willReturn(new ResponseEntity<GenericResponse>(any(GenericResponse.class),HttpStatus.OK));
 	}
+	
+	@Test
+	public void unFollowMockUserOrFollowNull() {
+		when(profileRepo.checkUser(anyString())).thenReturn(false);
+		given(socialMediaController.unfollow(anyString(), anyString())).willReturn(new ResponseEntity<GenericResponse>(any(GenericResponse.class),HttpStatus.NOT_FOUND));
+	}*/
 	
 	@Test
 	public void getNewsFeed() {		
@@ -84,18 +106,12 @@ public class CreditTestApplicationTests {
 	}
 	
 	@Test
-	public void getNewsFeedUserNot(){	
-		when(postService.newsFeed(anyString())).thenReturn(anyList());	
-		assertEquals(postService.newsFeed(anyString()),anyList());
-	}
-	
-	@Test
 	public void testFollowUserNotPresent(){			
 		Profile profile = new Profile();
 		profile.setUserId("1");
 		
 		GenericResponse response = new GenericResponse();
-		response.setErrorCode(404);
+		response.setCode(404);
 		response.setStatus("User does not found");
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
@@ -109,7 +125,7 @@ public class CreditTestApplicationTests {
 		profile.setUserId("1");
 		
 		GenericResponse response = new GenericResponse();
-		response.setErrorCode(404);
+		response.setCode(404);
 		response.setStatus("Follow Person not found");
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
@@ -123,7 +139,7 @@ public class CreditTestApplicationTests {
 		profile.setUserId("1");
 		
 		GenericResponse response = new GenericResponse();
-		response.setErrorCode(404);
+		response.setCode(404);
 		response.setStatus("User does not found");
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
@@ -137,7 +153,7 @@ public class CreditTestApplicationTests {
 		profile.setUserId("1");
 		
 		GenericResponse response = new GenericResponse();
-		response.setErrorCode(404);
+		response.setCode(404);
 		response.setStatus("unFollow Person not found");
 		
 		when(profileService.createProfile(profile)).thenReturn(profile);		
@@ -174,12 +190,28 @@ public class CreditTestApplicationTests {
 		when(profileService.fetchProfile(anyString())).thenReturn(profile);
 		assertEquals(profileService.fetchProfile(anyString()),profile);
 	}
-	
-	
+		
 	@Test
 	public void getProfileEmpty(){
 		when(profileService.fetchProfile(anyString())).thenReturn(null);
 		assertEquals(profileService.fetchProfile(anyString()),null);
 	}
+	
+	@Test
+	public void nullOutputNewsfeed(){
+		Profile profile = new Profile();
+		profile.setUserId("1");
+		when(profileService.createProfile(profile)).thenReturn(profile);
+		List<Post> outputPost = null;
+		when(postService.newsFeed("2")).thenReturn(null);
+		assertEquals(postService.newsFeed("2"),outputPost);
+	}
+	@Test
+	public void OutputNewsfeed(){
+		List<Post> outputPost = new ArrayList<>();
+		assertEquals(postService.newsFeed(anyString()),outputPost);
+	}
+
+	
 
 }
