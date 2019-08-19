@@ -2,9 +2,12 @@ package com.social.credittest.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,11 +61,11 @@ public class PostService {
 					outputPost.addAll(followiypost);
 				}
 			}
-			Collections.sort(outputPost);
+			//Collections.sort(outputPost);
 			if(outputPost.size()<NEWS_FEED_LIMIT) {
-				return outputPost;
+				return outputPost.stream().sorted(Comparator.comparing(Post::getDate).reversed()).collect(Collectors.toList());
 			}else {
-				return outputPost.subList(0, NEWS_FEED_LIMIT);
+				return outputPost.subList(0, NEWS_FEED_LIMIT).stream().sorted(Comparator.comparing(Post::getDate).reversed()).collect(Collectors.toList());
 			}		
 		}else {
 			return null;

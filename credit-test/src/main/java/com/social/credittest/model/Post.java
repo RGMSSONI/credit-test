@@ -42,8 +42,6 @@ public class Post implements Comparable<Post>{
 
 	@Override
 	public int compareTo(Post o) {
-		return o.getDate().compareTo(getDate());
-	}
-    
-    
+		return getDate().compareTo(o.getDate());
+	} 
 }
