@@ -3,8 +3,6 @@ package com.social.credittest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.stubbing.Answer;
-import org.mockito.stubbing.OngoingStubbing;
 
 import static org.mockito.Mockito.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
