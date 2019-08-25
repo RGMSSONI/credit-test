@@ -2,6 +2,9 @@ package com.social.credittest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,19 +66,26 @@ public class ProfileServiceTest {
 		
 		Mockito.when(profileRepo.checkUser(Mockito.anyString())).thenReturn(true);
 		
+		Set<String> set = new HashSet<>();
+		
 		Profile profile = new Profile();
         profile.setUserId("1");
+        profile.setFollowers(set);
+        profile.setFollowing(set);
         profileService.createProfile(profile);
         
         Profile profile2 = new Profile();
         profile2.setUserId("2");
+        profile2.setFollowers(set);
+        profile2.setFollowing(set);
         profileService.createProfile(profile2);
+        
+        Mockito.when(profileRepo.getProfile("1")).thenReturn(profile);
+        Mockito.when(profileRepo.getProfile("2")).thenReturn(profile2);
 		
         GenericResponse responseGot = profileService.addFollower("1", "2");
 		
-		assertEquals(response.getCode(), responseGot);
-		
-		//Mockito.verify(profileService, Mockito.times(1)).addFollower("1", "2");
+		assertEquals(response.getCode(), responseGot.getCode());		
 	}
 	
 	@Test
@@ -86,18 +96,25 @@ public class ProfileServiceTest {
 		
 		Mockito.when(profileRepo.checkUser(Mockito.anyString())).thenReturn(true);
 		
+		Set<String> set = new HashSet<>();
+		
 		Profile profile = new Profile();
         profile.setUserId("1");
+        profile.setFollowers(set);
+        profile.setFollowing(set);
         profileService.createProfile(profile);
         
         Profile profile2 = new Profile();
         profile2.setUserId("2");
+        profile2.setFollowers(set);
+        profile2.setFollowing(set);
         profileService.createProfile(profile2);
+        
+        Mockito.when(profileRepo.getProfile("1")).thenReturn(profile);
+        Mockito.when(profileRepo.getProfile("2")).thenReturn(profile2);
 		
         GenericResponse responseGot = profileService.removeFollower("1", "2");
 		
-		assertEquals(response.getCode(), responseGot);
-		
-		//Mockito.verify(profileService, Mockito.times(1)).removeFollower("1", "2");
+		assertEquals(response.getCode(), responseGot.getCode());	
 	}
 }

@@ -14,9 +14,6 @@ public class ProfileService {
 	@Autowired
 	private ProfileRepository profileRepo;
 	
-	@Autowired
-	private GenericResponse response;
-	
 	public Profile createProfile(Profile profile) {
 		if (profile != null && profile.getUserId() != null) {
 			String userId = profile.getUserId();
@@ -31,6 +28,7 @@ public class ProfileService {
 	}
 
 	public GenericResponse addFollower(String userId, String id) {
+		GenericResponse response = new GenericResponse();
 		if (profileRepo.checkUser(userId)) {
 			if (profileRepo.checkUser(id)) {
 				Profile profile = profileRepo.getProfile(userId);
@@ -59,6 +57,7 @@ public class ProfileService {
 	}
 
 	public GenericResponse removeFollower(String userId, String id) {
+		GenericResponse response = new GenericResponse();
 		if (profileRepo.checkUser(userId)) {
 			if (profileRepo.checkUser(id)) {
 				Profile profile = profileRepo.getProfile(userId);
