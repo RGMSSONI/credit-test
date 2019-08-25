@@ -16,7 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.social.credittest.model.Post;
+import com.social.credittest.model.Profile;
 import com.social.credittest.repository.PostRepository;
+import com.social.credittest.repository.ProfileRepository;
 import com.social.credittest.service.PostService;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +29,9 @@ public class PostServiceTest {
 	
 	@Mock
 	private PostRepository postRepo;
+	
+	@Mock
+	private ProfileRepository profileRepo;
 	
 	@Before
     public void init() {
@@ -46,6 +51,7 @@ public class PostServiceTest {
 		post.setDate(date);
 		outputPost.add(post);
 		
+		Mockito.when(postRepo.checkUser(Mockito.anyString())).thenReturn(true);
 		postService.createPost("1", post);
 		Mockito.verify(postRepo, Mockito.times(1)).createPost("1", outputPost);
 	}
@@ -58,7 +64,13 @@ public class PostServiceTest {
         post.setPostId("1");
         post.setContent("Hello There!");
         outputPost.add(post);
-
+      
+        Profile profile = new Profile();
+        profile.setUserId("1");
+         
+        Mockito.when(postRepo.checkUser(Mockito.anyString())).thenReturn(true);
+        Mockito.when(profileRepo.getProfile(Mockito.anyString())).thenReturn(profile);
+        
         Mockito.when(postRepo.getPost(Mockito.anyString())).thenReturn(outputPost);
         
         //test

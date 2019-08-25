@@ -61,7 +61,28 @@ public class ProfileServiceTest {
 		response.setCode(200);
 		response.setStatus("Success");
 		
-		Mockito.when(profileService.addFollower(Mockito.anyString(), Mockito.anyString())).thenReturn(response);
+		Mockito.when(profileRepo.checkUser(Mockito.anyString())).thenReturn(true);
+		
+		Profile profile = new Profile();
+        profile.setUserId("1");
+        profileService.createProfile(profile);
+        
+        Profile profile2 = new Profile();
+        profile2.setUserId("2");
+        profileService.createProfile(profile2);
+		
+        GenericResponse responseGot = profileService.addFollower("1", "2");
+		
+		assertEquals(response.getCode(), responseGot);
+		
+		//Mockito.verify(profileService, Mockito.times(1)).addFollower("1", "2");
+	}
+	
+	@Test
+	public void removeFollowerTest() {
+		GenericResponse response = new GenericResponse();
+		response.setCode(200);
+		response.setStatus("Success");
 		
 		Mockito.when(profileRepo.checkUser(Mockito.anyString())).thenReturn(true);
 		
@@ -73,10 +94,10 @@ public class ProfileServiceTest {
         profile2.setUserId("2");
         profileService.createProfile(profile2);
 		
-		profileService.addFollower("1", "2");
+        GenericResponse responseGot = profileService.removeFollower("1", "2");
 		
-		assertEquals(200, response.getCode());
+		assertEquals(response.getCode(), responseGot);
 		
-		Mockito.verify(profileService, Mockito.times(1)).addFollower("1", "2");
+		//Mockito.verify(profileService, Mockito.times(1)).removeFollower("1", "2");
 	}
 }
